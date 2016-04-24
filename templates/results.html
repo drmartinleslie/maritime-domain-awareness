@@ -8,32 +8,40 @@
 
 <h2>Your Search</h2>
 
-<p> Vessel Name: {{vesselNameFromUser}}<br>
-    Vessel Type: {{vesselTypeFromUser}}<br>
-    Vessel length minimum: {{minLengthFromUser}}<br>
-    Vessel length maximum: {{maxLengthFromUser}}</p>
+<table border="1" cellpadding="5">
+    <tr><td>Vessel Name:</td> <td>{{vesselNameFromUser}}</td></tr>
+    <tr><td>Gear Type:</td> <td>{{gearTypeFromUser}}</td></tr>
+    <tr><td>Vessel length minimum:</td> <td>{{minLengthFromUser}}</td></tr>
+    <tr><td>Vessel length maximum:</td> <td>{{maxLengthFromUser}}</td></tr>
+    <tr><td>Flag:</td> <td>{{flagFromUser}}</td></tr>
+    <tr><td>Sort By:</td> <td>{{sortKeyFromUser}}</td></tr>
+</table>
 
 <h2>Your Results</h2>
 
 <table border="1" cellpadding="5">
     <tr>
         <th>Vessel Name</th>
-        <th>Vessel Type</th>
+        <th>Gear Type</th>
         <th>Length</th>
+        <th>Flag</th>
+        <th>Source</th>
     </tr>
 
     {% for dict in results %}
     <tr>
         <td>{{dict["vesselName"]}}</td>
-        <td>{{dict["vesselServiceType"]}}</td>
+        <td>{{dict["gearType"]}}</td>
         <td>{{dict["length"]}}</td>
+        <td>{{dict["flag"]}}</td>
+        <td><a href="{{dict['link']}}">{{dict['db']}}</a></td>
     </tr>
-
     {% endfor %}
+
 </table><br>
 
 <div>
-    <img img src="/static/images/logo.png" alt="Fishakathon logo" style="width:177px;height:34.5px;vertical-align: middle;"/>
+    <img src="/static/images/logo.png" alt="Fishakathon logo" style="width:177px;height:34.5px;vertical-align: middle;"/>
     <span style="vertical-align: middle;">Earth Day 2016 • Monterey, CA</span>
 </div>
 

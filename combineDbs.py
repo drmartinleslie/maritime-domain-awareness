@@ -9,8 +9,8 @@ ftPerM = 3.28084
 
 iattcData = db.iattc.find()
 for row in iattcData:
-    formattedRow = {'name': row['name'], 'lengthFt': round(row['lengthM'] * ftPerM), 'flag': row['flag'],
-                    'link': row['link'], 'db': 'iattc', 'dbId': row['_id']}
+    formattedRow = {'vesselName': row['name'], 'length': round(row['lengthM'] * ftPerM), 'flag': row['flag'],
+                    'gearType': row['gear'], 'link': row['link'], 'db': 'iattc', 'dbId': row['_id']}
     combinedTable.insert_one(formattedRow)
 
 iuuData = db.iuu.find()
@@ -36,6 +36,6 @@ for row in iuuData:
         lengthFt = round(value)
     else:
         lengthFt = float('nan')
-    formattedRow = {'name': row['RFMO Vessel Name'], 'lengthFt': lengthFt, 'flag': row['Current Flag'],
-                    'link': row['link'], 'db': 'iuu', 'dbId': row['_id']}
+    formattedRow = {'vesselName': row['RFMO Vessel Name'], 'length': lengthFt, 'flag': row['Current Flag'],
+                    'gearType': row['Vessel Type'], 'link': row['link'], 'db': 'iuu', 'dbId': row['_id']}
     combinedTable.insert_one(formattedRow)

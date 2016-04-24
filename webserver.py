@@ -1,6 +1,5 @@
 from flask import Flask, render_template, request
 from pymongo import MongoClient
-from collections import defaultdict
 
 app = Flask(__name__)
 mc = MongoClient()
@@ -14,9 +13,11 @@ def index():
 @app.route('/submit')
 def submit():
     vesselNameFromUser = request.args.get("vesselName")
-    vesselTypeFromUser = request.args.get("vesselServiceType")
+    gearTypeFromUser = request.args.get("gearType")
     minLengthFromUser = request.args.get("minLength")
     maxLengthFromUser = request.args.get("maxLength")
+    flagFromUser = request.args.get("flag")
+    sortKeyFromUser = request.args.get("sortKey")
 
     query = {}
 
@@ -24,25 +25,35 @@ def submit():
         query["vesselName"] = vesselNameFromUser
 
     if minLengthFromUser and maxLengthFromUser:
-        query["length"] = {"$gt": int(minLengthFromUser), "$lt": int(maxLengthFromUser)}
+        query["length"] = {"$gte": int(minLengthFromUser), "$lte": int(maxLengthFromUser)}
 
     if minLengthFromUser and (not maxLengthFromUser):
-        query["length"] = {"$gt": int(minLengthFromUser)}
+        query["length"] = {"$gte": int(minLengthFromUser)}
 
     if maxLengthFromUser and (not minLengthFromUser):
-        query["length"] = {"$lt": int(maxLengthFromUser)}
+        query["length"] = {"$lte": int(maxLengthFromUser)}
 
-    if vesselTypeFromUser:
-        query["vesselServiceType"] = vesselTypeFromUser
+    if gearTypeFromUser:
+        query["gearType"] = gearTypeFromUser
 
-    results = db.vessels.find(query)
-    #results = db.vessels.find({"length": {"$gt": validatedMinLengthFromUser, "$lt": validatedMaxLengthFromUser}})
+    if flagFromUser:
+        query["flag"] = flagFromUser
 
-    #results = db.vessels.find({"vesselName":vesselNameFromUser, "length": {"$gt": validatedMinLengthFromUser, "$lt": validatedMaxLengthFromUser}})
+    results = db.combined.find(query).sort(sortKeyFromUser, 1) # 1 is ascending, -1 is descending
 
+    if sortKeyFromUser == 'vesselName':
+        sortKeyPretty = 'Vessel Name'
+    elif sortKeyFromUser == 'length':
+        sortKeyPretty = 'Length'
+    elif sortKeyFromUser == 'gearType':
+        sortKeyPretty = 'Gear Type'
+    elif sortKeyFromUser == 'flag':
+        sortKeyPretty = 'Flag'
 
-    return render_template("results.html",results=results, vesselTypeFromUser=vesselTypeFromUser, vesselNameFromUser=vesselNameFromUser,maxLengthFromUser=maxLengthFromUser, minLengthFromUser=minLengthFromUser)
-
+    return render_template("results.html", results=results, gearTypeFromUser=gearTypeFromUser,
+                           vesselNameFromUser=vesselNameFromUser, maxLengthFromUser=maxLengthFromUser,
+                           minLengthFromUser=minLengthFromUser, flagFromUser=flagFromUser,
+                           sortKeyFromUser=sortKeyPretty)
 
 if __name__ == "__main__":
     app.run(host='0.0.0.0')

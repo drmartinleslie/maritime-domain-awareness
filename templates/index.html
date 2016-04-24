@@ -14,13 +14,28 @@
 <form action="/submit" method="get">
     Vessel name:
     <input type="text" name="vesselName"><br><br>
-    Vessel type:
-    <select name="vesselServiceType">
+    Gear type:
+    <select name="gearType">
         <option></option>
-        <option value="Commercial fishing vessel">Commercial fishing vessel</option>
-        <option value="Fish processing vessel">Fish Processing Vessel</option>
+        <option value="Gillnet">Gillnet</option>
+        <option value="Harpoon">Harpoon</option>
+        <option value="Longline">Longline</option>
+        <option value="Pole and line">Pole and line</option>
+        <option value="Purse Seine">Purse Seine</option>
+        <option value="Stern Trawler">Stern Trawler</option>
+        <option value="Trawler">Trawler</option>
+        <option value="Troll">Troll</option>
     </select><br><br>
+    Flag:
+    <input type="text" name="flag"><br><br>
     Length (ft.) is at least <input type="number" name="minLength"> and not longer than <input type="number" name="maxLength">.<br><br>
+    Sort By:
+    <select name="sortKey">
+        <option value="vesselName">Vessel Name</option>
+        <option value="gearType">Gear Type</option>
+        <option value="flag">Flag</option>
+        <option value="length">Length</option>
+    </select><br><br>
     <input type="submit" value="Submit">
 </form>
 
