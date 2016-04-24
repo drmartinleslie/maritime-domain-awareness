@@ -4,7 +4,8 @@ from pymongo import MongoClient
 
 mc = MongoClient()
 db = mc.vesselDB
-table = db.iattc
+db.iattc.drop()
+iattcTable = db.iattc
 
 def floatOrNan(string):
     try:
@@ -13,7 +14,8 @@ def floatOrNan(string):
         floatValue = float('nan')
     return floatValue
 
-webpage = urlopen('https://www.iattc.org//vesselregister/VesselList.aspx?List=RegVessels&Lang=ENG')
+link = 'https://www.iattc.org//vesselregister/VesselList.aspx?List=RegVessels&Lang=ENG'
+webpage = urlopen(link)
 soup = BeautifulSoup(webpage.read())
 tables = soup.find_all('table', id=lambda x: x and x.startswith('Flag_'))
 
@@ -34,6 +36,6 @@ for table in tables:
                 dbRow = {"iattcVesselNumber": floatOrNan(dataList[0]), "name": dataList[1],
                          "lengthM": floatOrNan(dataList[2]), "fishHoldVolumeM3": floatOrNan(dataList[3]),
                          "carryingCapacityT": floatOrNan(dataList[4]), "flag": idStringList[1],
-                         "gear": idStringList[3]}
-                table.insert_one(dbRow)
+                         "gear": idStringList[3], "link": link}
+                iattcTable.insert_one(dbRow)
 

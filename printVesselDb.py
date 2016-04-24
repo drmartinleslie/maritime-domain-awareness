@@ -4,4 +4,9 @@ mc = MongoClient()
 db = mc.vesselDB
 collectionNames = db.collection_names()
 
-print collectionNames
+for name in collectionNames:
+    print name
+    collection = db[name].find()
+    for row in collection:
+        print row
+    print
