@@ -1,0 +1,43 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Results</title>
+</head>
+<body background="/static/images/water.jpg">
+
+<h2>Your Search</h2>
+
+<p> Vessel Name: {{vesselNameFromUser}}<br>
+    Vessel Type: {{vesselTypeFromUser}}<br>
+    Vessel length minimum: {{minLengthFromUser}}<br>
+    Vessel length maximum: {{maxLengthFromUser}}</p>
+
+<h2>Your Results</h2>
+
+<table border="1" cellpadding="5">
+    <tr>
+        <th>Vessel Name</th>
+        <th>Vessel Type</th>
+        <th>Length</th>
+    </tr>
+
+    {% for dict in results %}
+    <tr>
+        <td>{{dict["vesselName"]}}</td>
+        <td>{{dict["vesselServiceType"]}}</td>
+        <td>{{dict["length"]}}</td>
+    </tr>
+
+    {% endfor %}
+</table><br>
+
+<div>
+    <img img src="/static/images/logo.png" alt="Fishakathon logo" style="width:177px;height:34.5px;vertical-align: middle;"/>
+    <span style="vertical-align: middle;">Earth Day 2016 • Monterey, CA</span>
+</div>
+
+<a href="/">Back to search</a>
+
+</body>
+</html>

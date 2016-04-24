@@ -1,0 +1,28 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <title>Finding Dory</title>
+</head>
+<body>
+<body background="/static/images/water.jpg">
+<h2>Purpose</h2>
+<p>This website integrates information from other websites about fishing vessels. The interface can be used to search for information on a vessel suspected of illegal, unreported or unregulated (IUU) fishing.</p>
+
+<h2>Search</h2>
+<p>Enter information about the vessel you are interested in below. Fields left blank are ignored.</p>
+<form action="/submit" method="get">
+    Vessel name:
+    <input type="text" name="vesselName"><br><br>
+    Vessel type:
+    <select name="vesselServiceType">
+        <option></option>
+        <option value="Commercial fishing vessel">Commercial fishing vessel</option>
+        <option value="Fish processing vessel">Fish Processing Vessel</option>
+    </select><br><br>
+    Length (ft.) is at least <input type="number" name="minLength"> and not longer than <input type="number" name="maxLength">.<br><br>
+    <input type="submit" value="Submit">
+</form>
+
+</body>
+</html>
